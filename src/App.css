@@ -1,4 +1,21 @@
 .App {
   text-align: center;
-  padding: 20%;
+  padding: 15%;
+}
+
+.header {
+  margin: 2rem;
+  text-transform: uppercase;
+  font-family: fantasy;
+  text-decoration: underline;
+}
+
+.input {
+  margin: 0% 20%;
+}
+
+.output {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
 }

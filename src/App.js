@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Input } from 'antd';
+import { InputGroup, InputGroupAddon, Button, Input, Spinner } from 'reactstrap';
 import { SEARCH } from './services/index';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import 'antd/dist/antd.css';
 
 function App() {
 
-  const { Search } = Input;
   const [input, setInput] = useState(""); 
-  const [ouput, setoutput] = useState("");
+  const [ouput, setoutput] = useState("____________");
+  const [isLoading, setLoading] = useState(false);
   
   const onChange = (e) => {
     setInput(e.target.value);
@@ -16,15 +16,21 @@ function App() {
 
   const onSearch = async () => {
     try {
-      const result = await SEARCH(input);
-      if (result.status) {
-        if (result.found) {
-          setoutput(result.outletName);
+      if (!input) {
+        alert('Please type something to search ...');
+      } else {
+        setLoading(true);
+        const result = await SEARCH(input);
+        setLoading(false);
+        if (result.status) {
+          if (result.found) {
+            setoutput(result.outletName);
+          } else {
+            setoutput('Not found.');
+          }
         } else {
           setoutput('Not found.');
         }
-      } else {
-        setoutput('Something went wrong.Please try after sometime.');
       }
     } catch (e) {
       setoutput('Something went wrong.Please try after sometime.');
@@ -33,19 +39,26 @@ function App() {
 
   return (
     <div className="App">
-      <h1> Location Identifier </h1>
-      <div className="output">
-        <Search
-          placeholder="Input search text"
-          enterButton="Search"
-          size="large"
-          value={input}
-          onChange={onChange}
-          onSearch={onSearch}
-        />
+      <div className="header">
+        <h2> Outlet Identifier </h2>
+      </div>
+      <div className="input">
+        <InputGroup>
+          <Input value={input} onChange={onChange} placeholder="Please type your address"/>
+          <InputGroupAddon addonType="append">
+            <Button
+              color={isLoading ? "secondary" : "primary"}
+              disabled={isLoading ? true : undefined}
+              onClick={onSearch}>
+              {isLoading ? "Searching..." : "Search"}
+            </Button>
+            { isLoading ? <Spinner color="dark" /> : null}
+          </InputGroupAddon>
+        </InputGroup>
       </div>
       <div className="output">
-        <p> ouput : {ouput} </p>
+        <h5> Outlet : </h5>
+        <h5> <strong>{ouput}</strong> </h5>
       </div>
     </div>
   );

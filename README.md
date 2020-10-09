@@ -1,14 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Clone the repository 
+### Clone the repository 
 
 [sudo] git clone "https://github.com/dinudines/Location-Identifier-frontend.git"
 
-## Install the dependencies
+### Install the dependencies
 
 [sudo] npm install
 
-## Run the application
+### Run the application
 
 [sudo] npm start
 
